@@ -40,42 +40,10 @@
  本篇README.md面向开发者
  
 ## 目录
-- [安装步骤](#安装步骤)
-- [文件目录说明](#文件目录说明)
 - [版本控制](#版本控制)
 - [作者](#作者)
+- [版权说明](#版权说明)
 
-###### **安装步骤**
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-
-```sh
-git clone https://github.com/JBpeople/python_tools.git
-```
-
-### 文件目录说明
-eg:
-
-```
-filetree 
-├── ARCHITECTURE.md
-├── LICENSE.txt
-├── README.md
-├── /account/
-├── /bbs/
-├── /docs/
-│  ├── /rules/
-│  │  ├── backend.txt
-│  │  └── frontend.txt
-├── manage.py
-├── /oa/
-├── /static/
-├── /templates/
-├── useless.md
-└── /util/
-
-```
 ### 版本控制
 
 该项目使用Git进行版本管理。您可以在repository参看当前可用版本。
