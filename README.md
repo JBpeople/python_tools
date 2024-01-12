@@ -45,7 +45,7 @@
 
 ### 项目
 
-sync_file_to_ftp：同步本地文件到FTP服务器；
+[sync_file_to_ftp](https://github.com/JBpeople/python_tools/tree/main/sync_files_to_ftp)：同步本地文件到FTP服务器；
 
 ### 版本控制
 
