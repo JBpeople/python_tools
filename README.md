@@ -17,7 +17,7 @@
 <br />
 
 <p align="center">
-  <a href="https://github.com/shaojintian/Best_README_template/">
+  <a href="https://github.com/JBpeople/python_tools/">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -25,14 +25,14 @@
   <p align="center">
     一个"完美的"README模板去快速开始你的项目！
     <br />
-    <a href="https://github.com/shaojintian/Best_README_template"><strong>探索本项目的文档 »</strong></a>
+    <a href="https://github.com/JBpeople/python_tools"><strong>探索本项目的文档 »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/shaojintian/Best_README_template">查看Demo</a>
+    <a href="https://github.com/JBpeople/python_tools">查看Demo</a>
     ·
-    <a href="https://github.com/shaojintian/Best_README_template/issues">报告Bug</a>
+    <a href="https://github.com/JBpeople/python_tools/issues">报告Bug</a>
     ·
-    <a href="https://github.com/shaojintian/Best_README_template/issues">提出新特性</a>
+    <a href="https://github.com/JBpeople/python_tools/issues">提出新特性</a>
   </p>
 
 </p>
@@ -57,7 +57,7 @@
 
 ### 上手指南
 
-请将所有链接中的“shaojintian/Best_README_template”改为“your_github_name/your_repository”
+请将所有链接中的“JBpeople/python_tools”改为“your_github_name/your_repository”
 
 
 
@@ -72,7 +72,7 @@
 2. Clone the repo
 
 ```sh
-git clone https://github.com/shaojintian/Best_README_template.git
+git clone https://github.com/JBpeople/python_tools.git
 ```
 
 ### 文件目录说明
@@ -104,7 +104,7 @@ filetree
 
 ### 开发的架构 
 
-请阅读[ARCHITECTURE.md](https://github.com/shaojintian/Best_README_template/blob/master/ARCHITECTURE.md) 查阅为该项目的架构。
+请阅读[ARCHITECTURE.md](https://github.com/JBpeople/python_tools/blob/master/ARCHITECTURE.md) 查阅为该项目的架构。
 
 ### 部署
 
@@ -147,7 +147,7 @@ xxx@xxxx
 
 ### 版权说明
 
-该项目签署了MIT 授权许可，详情请参阅 [LICENSE.txt](https://github.com/shaojintian/Best_README_template/blob/master/LICENSE.txt)
+该项目签署了MIT 授权许可，详情请参阅 [LICENSE.txt](https://github.com/JBpeople/python_tools/blob/master/LICENSE.txt)
 
 ### 鸣谢
 
@@ -161,16 +161,16 @@ xxx@xxxx
 
 <!-- links -->
 [your-project-path]:JBpeople/python_tools
-[contributors-shield]: https://img.shields.io/github/contributors/shaojintian/Best_README_template.svg?style=flat-square
-[contributors-url]: https://github.com/shaojintian/Best_README_template/graphs/contributors
+[contributors-shield]: https://img.shields.io/github/contributors/JBpeople/python_tools.svg?style=flat-square
+[contributors-url]: https://github.com/JBpeople/python_tools/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/JBpeople/python_tools.svg?style=flat-square
 [forks-url]: https://github.com/JBpeople/python_tools/network/members
-[stars-shield]: https://img.shields.io/github/stars/shaojintian/Best_README_template.svg?style=flat-square
-[stars-url]: https://github.com/shaojintian/Best_README_template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/shaojintian/Best_README_template.svg?style=flat-square
-[issues-url]: https://img.shields.io/github/issues/shaojintian/Best_README_template.svg
-[license-shield]: https://img.shields.io/github/license/shaojintian/Best_README_template.svg?style=flat-square
-[license-url]: https://github.com/shaojintian/Best_README_template/blob/master/LICENSE.txt
+[stars-shield]: https://img.shields.io/github/stars/JBpeople/python_tools.svg?style=flat-square
+[stars-url]: https://github.com/JBpeople/python_tools/stargazers
+[issues-shield]: https://img.shields.io/github/issues/JBpeople/python_tools.svg?style=flat-square
+[issues-url]: https://img.shields.io/github/issues/JBpeople/python_tools.svg
+[license-shield]: https://img.shields.io/github/license/JBpeople/python_tools.svg?style=flat-square
+[license-url]: https://github.com/JBpeople/python_tools/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/shaojintian
 
