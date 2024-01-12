@@ -160,11 +160,11 @@ xxx@xxxx
 - [xxxxxxxxxxxxxx](https://connoratherton.com/loaders)
 
 <!-- links -->
-[your-project-path]:shaojintian/Best_README_template
+[your-project-path]:JBpeople/python_tools
 [contributors-shield]: https://img.shields.io/github/contributors/shaojintian/Best_README_template.svg?style=flat-square
 [contributors-url]: https://github.com/shaojintian/Best_README_template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/shaojintian/Best_README_template.svg?style=flat-square
-[forks-url]: https://github.com/shaojintian/Best_README_template/network/members
+[forks-shield]: https://img.shields.io/github/forks/JBpeople/python_tools.svg?style=flat-square
+[forks-url]: https://github.com/JBpeople/python_tools/network/members
 [stars-shield]: https://img.shields.io/github/stars/shaojintian/Best_README_template.svg?style=flat-square
 [stars-url]: https://github.com/shaojintian/Best_README_template/stargazers
 [issues-shield]: https://img.shields.io/github/issues/shaojintian/Best_README_template.svg?style=flat-square
