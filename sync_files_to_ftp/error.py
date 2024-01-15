@@ -17,3 +17,10 @@ class ConfigItemError(Exception):
     配置项错误
     """
     pass
+
+
+class FileNameContainsChinese(Exception):
+    """
+    文件名包含中文
+    """
+    pass

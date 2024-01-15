@@ -51,7 +51,7 @@ class Config(object):
         获取配置项，存入对象属性
         """
         if not os.path.exists(os.path.join(os.path.dirname(__file__), 'config.ini')):  # 判断配置文件是否存在
-            raise error.ConfigFileNotFound
+            raise error.ConfigFileNotFound('无法找到配置文件')
         # 读取配置文件
         try:
             self.source_dir = self.config['local_dir']['source_dir']
@@ -61,7 +61,7 @@ class Config(object):
             self.target_dir = self.config['ftp']['target_dir']
             self.interval_time = self.config['time']['interval_time']
         except KeyError as e:
-            raise error.MissConfigItem(e)
+            raise error.MissConfigItem(f'缺少配置项: {e}')
 
 
 if __name__ == '__main__':
