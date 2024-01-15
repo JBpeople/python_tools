@@ -1,7 +1,10 @@
 import ftplib
 import hashlib
 import os
+import re
 from typing import Dict
+
+import log
 
 import config
 import error
@@ -32,18 +35,30 @@ class FtpFile(object):
         """
         self.ftp.quit()
 
+    @staticmethod
+    def __contains_chinese(string: str) -> bool:
+        """
+        判断字符串是否包含中文
+        :param string: 需要校验的字符串
+        :return: 是否包含中文
+        """
+        if re.search('[\u4e00-\u9fff]', string):
+            return True
+        return False
+
     def upload_file(self, file_name: str) -> None:
         """
         上传文件
         :param file_name: 本地文件夹下文件名
         """
         absolute_file_path = str(os.path.join(self.config.source_dir, file_name))  # 将子文件路径转成绝对路径
-        file_path = os.path.basename(absolute_file_path)
-        try:
+        if self.__contains_chinese(absolute_file_path):
+            log.logger.error(f'文件路径中包含中文: {file_name}')
+            raise error.FileNameContainsChinese(f'文件路径中包含中文: {file_name}')
+        else:
+            file_path = os.path.basename(absolute_file_path)
             with open(absolute_file_path, 'rb') as file:
                 self.ftp.storbinary('STOR ' + file_path, file)
-        except UnicodeEncodeError:
-            raise error.FileNameContainsChinese(f'文件名包含中文: {file_name}')
 
     def get_local_files_md5(self) -> Dict[str, str]:
         """
