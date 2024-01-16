@@ -23,7 +23,8 @@ class FtpFile(object):
         self.config.get_config()
 
         try:
-            self.ftp = ftplib.FTP(self.config.ftp_ip)
+            self.ftp = ftplib.FTP()
+            self.ftp.connect(self.config.ftp_ip, int(self.config.ftp_port))
             self.ftp.login(self.config.ftp_user, self.config.ftp_password)
             self.ftp.cwd(self.config.target_dir)  # 进入指定文件夹下
         except ftplib.error_perm as e:
@@ -77,4 +78,3 @@ class FtpFile(object):
 
 if __name__ == '__main__':
     ftp = FtpFile()
-    print(ftp.get_local_files_md5())

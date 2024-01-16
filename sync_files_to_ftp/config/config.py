@@ -27,6 +27,7 @@ class Config(object):
         self.ftp_password = None
         self.ftp_user = None
         self.ftp_ip = None
+        self.ftp_port = None
         self.source_dir = None
         self.target_dir = None
         self.interval_time = None
@@ -38,6 +39,7 @@ class Config(object):
         self.config['local_dir'] = {'source_dir': './log'}
         self.config['ftp'] = {
             'ftp_ip': '172.24.208.1',
+            'port': '21',
             'ftp_user': 'uid19452',
             'ftp_password': 'Abcd1234',
             'target_dir': 'CNC1'
@@ -56,6 +58,7 @@ class Config(object):
         try:
             self.source_dir = self.config['local_dir']['source_dir']
             self.ftp_ip = self.config['ftp']['ftp_ip']
+            self.ftp_port = self.config['ftp']['port']
             self.ftp_user = self.config['ftp']['ftp_user']
             self.ftp_password = self.config['ftp']['ftp_password']
             self.target_dir = self.config['ftp']['target_dir']

@@ -30,7 +30,7 @@ class Main(object):
         with open('./log/md5.json', 'w') as file:
             json.dump(files_md5, file)
 
-    def run(self):
+    def start(self):
         """
         程序执行逻辑
         """
@@ -66,4 +66,4 @@ class Main(object):
 
 if __name__ == '__main__':
     main = Main()
-    main.run()
+    main.start()
