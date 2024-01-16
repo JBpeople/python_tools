@@ -1,69 +1,85 @@
-import json
-import os.path
+import sys
 import time
 
-import log
-from config.config import Config
+from PyQt5.QtCore import QTimer
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QApplication, QMainWindow, QSystemTrayIcon
+
+import gui
+from file_sync import FileSync
 from ftp import FtpFile
 
 
-class Main(object):
+class Main(QMainWindow, gui.MainWindow):
     """
     主程序
     """
 
     def __init__(self):
         """
-        程序初始化，创建FTP文件连接
+        程序初始化
         """
-        self.ftp = FtpFile()
+        super().__init__()
+        self.setupUi(self)  # 界面初始化
+        self.setWindowIcon(QIcon('sync.png'))  # 设置窗口图标
 
-        cf = Config()
-        cf.get_config()
-        self.interval_time = int(cf.interval_time)  # 获取间隔时间
+        self.ftp = FtpFile()  # 创建FTP连接对象
 
-    def __update_json(self) -> None:
-        """
-        更新本地json的md5编码
-        """
-        files_md5 = self.ftp.get_local_files_md5()
-        with open('./log/md5.json', 'w') as file:
-            json.dump(files_md5, file)
+        self.start_time = None  # 程序启动时间
 
-    def start(self):
-        """
-        程序执行逻辑
-        """
-        while True:
-            files_md5 = self.ftp.get_local_files_md5()  # 获取本地文件夹的md5编码
+        self.tray_icon = QSystemTrayIcon(QIcon('sync.png'))  # 创建系统托盘图标
+        self.tray_icon.activated.connect(self.__tray_icon_activated)  # 连接托盘图标的激活事件
 
-            if not os.path.exists('./log/md5.json'):  # 如果md5记录不存在, 则进行第一次同步
-                log.logger.warning('开始第一次日志同步')
-                self.__update_json()
-                for key in files_md5.keys():
-                    self.ftp.upload_file(key)
-                    log.logger.warning('文件: {} 是新文件, 已经上传至FTP服务器'.format(key))
-            else:
-                with open('./log/md5.json', 'r') as file:
-                    old_files_md5 = json.load(file)  # 存储上一次上传记录
-                    for file_name in files_md5:
-                        if file_name in old_files_md5:  # 如果本地和FTP服务器文件名一致, 则比较md5值
-                            if files_md5[file_name] != old_files_md5[file_name]:  # 如果md5值不一致, 则上传文件
-                                self.ftp.upload_file(file_name)
-                                log.logger.warning('文件: {} 发生了变化, 已经上传至FTP服务器'.format(file_name))
-                                self.__update_json()
-                        else:  # 本地出现新的文件，直接上传服务器
-                            self.ftp.upload_file(file_name)
-                            log.logger.warning('文件: {} 是新文件, 已经上传至FTP服务器'.format(file_name))
-                            self.__update_json()
-                    for file_name in old_files_md5:
-                        if file_name not in files_md5:  # 上一次上传记录里面有文件，但是本地没有了，说明本地被删除
-                            log.logger.warning('文件: {} 已经被删除'.format(file_name))
-                            self.__update_json()
-            log.logger.info(f'等待{main.interval_time}秒')
-            time.sleep(main.interval_time)
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.__update_log_and_time)  # 定时任务，每隔一秒更新日志输出
+        self.bt_start.clicked.connect(self.run)  # 点击开始按钮，启动日志同步
+        self.bt_mini.clicked.connect(self.__minimize_to_tray)  # 点击最小化按钮，最小化到系统托盘
+
+    def __update_log_and_time(self):
+        """
+        更新日志，运行时间
+        """
+        with open('./log/debug.log', 'r', encoding='utf-8') as file:
+            content = file.read()
+        self.te_log.setPlainText(content)  # 更新控件内容
+        cursor = self.te_log.textCursor()  # 获取文本光标
+        cursor.movePosition(cursor.End)  # 将光标移动到文本末尾
+        self.te_log.setTextCursor(cursor)  # 设置文本光标
+        self.te_log.ensureCursorVisible()  # 确保光标可见
+
+        if self.start_time:
+            self.elapsed_time = time.time() - self.start_time
+            hours, remainder = divmod(self.elapsed_time, 3600)
+            minutes, seconds = divmod(remainder, 60)
+            self.lb_time.setText(f'运行时间: {int(hours):02d}:{int(minutes):02d}:{int(seconds):02d}')
+
+    def __minimize_to_tray(self):
+        """
+        最小化到系统托盘
+        """
+        self.hide()  # 隐藏主窗口
+        self.tray_icon.show()  # 显示系统托盘图标
+
+    def __tray_icon_activated(self, reason):
+        """
+        托盘图标被激活
+        """
+        if reason == QSystemTrayIcon.DoubleClick:
+            self.show()  # 显示主窗口
+            self.tray_icon.hide()  # 隐藏系统托盘图标
+
+    def run(self):
+        """
+        启动日志同步
+        """
+        self.start_time = time.time()
+        file_sync = FileSync()
+        file_sync.start()
 
 
 if __name__ == '__main__':
+    app = QApplication(sys.argv)
     main = Main()
-    main.start()
+    main.timer.start(1000)  # 启动定时任务
+    main.show()
+    app.exec_()
