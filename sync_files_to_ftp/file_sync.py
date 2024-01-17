@@ -13,17 +13,27 @@ class FileSync(QThread):
     """
     文件同步线程
     """
+    _instance = None
 
-    def __init__(self):
+    def __new__(cls, *args, **kwargs):
+        """
+        实现单例模式
+        """
+        if not cls._instance:
+            cls._instance = super().__new__(cls, *args, **kwargs)
+        return cls._instance
+
+    def __init__(self, ftp_file: FtpFile):
         """
         初始化
         """
         super().__init__()
-        self.ftp = FtpFile()  # 创建FTP连接对象
+        self.ftp = ftp_file  # 创建FTP连接对象
 
         cf = Config()
         cf.get_config()
         self.interval_time = int(cf.interval_time)  # 获取间隔时间
+        self.status = False  # 线程状态
 
     def __update_json(self) -> None:
         """
@@ -37,7 +47,7 @@ class FileSync(QThread):
         """
         线程执行逻辑
         """
-        while True:
+        while self.status:
             files_md5 = self.ftp.get_local_files_md5()  # 获取本地文件夹的md5编码
 
             if not os.path.exists('./log/md5.json'):  # 如果md5记录不存在, 则进行第一次同步

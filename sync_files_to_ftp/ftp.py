@@ -22,19 +22,22 @@ class FtpFile(object):
         self.config = config.Config()
         self.config.get_config()
 
-        try:
-            self.ftp = ftplib.FTP()
-            self.ftp.connect(self.config.ftp_ip, int(self.config.ftp_port))
-            self.ftp.login(self.config.ftp_user, self.config.ftp_password)
-            self.ftp.cwd(self.config.target_dir)  # 进入指定文件夹下
-        except ftplib.error_perm as e:
-            raise error.ConfigItemError(f'配置项有误: {e}')
+        self.ftp = ftplib.FTP()
 
     def __del__(self):
         """
         关闭FTP连接
         """
         self.ftp.quit()
+
+    def get_connection(self):
+        try:
+            self.ftp.connect(self.config.ftp_ip, int(self.config.ftp_port))
+            self.ftp.login(self.config.ftp_user, self.config.ftp_password)
+            self.ftp.cwd(self.config.target_dir)  # 进入指定文件夹下
+            return True
+        except Exception:
+            return False
 
     @staticmethod
     def __contains_chinese(string: str) -> bool:

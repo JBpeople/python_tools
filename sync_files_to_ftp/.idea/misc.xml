@@ -4,4 +4,7 @@
     <option name="sdkName" value="sync_files_to_FTP" />
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="sync_files_to_FTP" project-jdk-type="Python SDK" />
+  <component name="PyPackaging">
+    <option name="earlyReleasesAsUpgrades" value="true" />
+  </component>
 </project>

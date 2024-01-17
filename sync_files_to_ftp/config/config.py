@@ -24,6 +24,7 @@ class Config(object):
         """
         self.config = ConfigParser()
         self.config.read(os.path.join(os.path.dirname(__file__), 'config.ini'))
+
         self.ftp_password = None
         self.ftp_user = None
         self.ftp_ip = None
@@ -32,19 +33,27 @@ class Config(object):
         self.target_dir = None
         self.interval_time = None
 
-    def init_config_file(self) -> None:
+    def mod_config_file(self,
+                        source_dir: str = '',
+                        ftp_ip: str = '',
+                        port: str = '',
+                        ftp_user: str = '',
+                        ftp_password: str = '',
+                        target_dir: str = '',
+                        interval_time: str = ''
+                        ) -> None:
         """
-        配置文件初始化
+        写入配置文件
         """
-        self.config['local_dir'] = {'source_dir': './log'}
+        self.config['local_dir'] = {'source_dir': source_dir}
         self.config['ftp'] = {
-            'ftp_ip': '172.24.208.1',
-            'port': '21',
-            'ftp_user': 'uid19452',
-            'ftp_password': 'Abcd1234',
-            'target_dir': 'CNC1'
+            'ftp_ip': ftp_ip,
+            'port': port,
+            'ftp_user': ftp_user,
+            'ftp_password': ftp_password,
+            'target_dir': target_dir
         }
-        self.config['time'] = {'interval_time': '12 hours'}
+        self.config['time'] = {'interval_time': interval_time}
         with open(os.path.join(os.path.dirname(__file__), 'config.ini'), 'w') as configfile:
             self.config.write(configfile)
 
@@ -69,4 +78,3 @@ class Config(object):
 
 if __name__ == '__main__':
     config = Config()
-    config.init_config_file()
