@@ -38,6 +38,9 @@ class ConfigWindow(QMainWindow, interface.ConfigWindow):
         self.bt_config_close.clicked.connect(self.close)
 
     def init_window(self):
+        """
+        初始化窗口，读取配置文件
+        """
         self.le_source_dir.setText(self.cf.source_dir)
         self.le_ftp_ip.setText(self.cf.ftp_ip)
         self.le_port.setText(self.cf.ftp_port)
@@ -75,8 +78,11 @@ class Main(QMainWindow, interface.MainWindow):
         self.tray_icon = QSystemTrayIcon(QIcon(window_icon))  # 创建系统托盘图标
         self.tray_icon.activated.connect(self.__tray_icon_activated)  # 连接托盘图标的激活事件
 
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.__update_log_and_time)  # 定时任务，每隔一秒更新日志输出
+        self.refresh_interface_timer = QTimer()
+        self.refresh_interface_timer.timeout.connect(self.__update_log_and_time)  # 定时任务，每隔一秒更新日志输出
+
+        self.monitor_timer = QTimer()
+        self.monitor_timer.timeout.connect(self.is_sync_file)  # 定时任务，检测文件是否发生变化
 
         self.bt_start.clicked.connect(self.run)  # 点击开始按钮，启动日志同步
         self.bt_mini.clicked.connect(self.__minimize_to_tray)  # 点击最小化按钮，最小化到系统托盘
@@ -100,6 +106,12 @@ class Main(QMainWindow, interface.MainWindow):
             hours, remainder = divmod(self.elapsed_time, 3600)
             minutes, seconds = divmod(remainder, 60)
             self.lb_time.setText(f'运行时间: {int(hours):02d}:{int(minutes):02d}:{int(seconds):02d}')
+
+    def is_sync_file(self):
+        """
+        检测文件是否发生变化
+        """
+        self.file_sync.is_update = self.ftp.is_md5_changed()
 
     def __minimize_to_tray(self):
         """
@@ -139,7 +151,7 @@ class Main(QMainWindow, interface.MainWindow):
         self.lb_status.setStyleSheet(
             'min-width: 24px; min-height: 24px;max-width:24px; max-height: 24px;border-radius: 12px;  border:1px solid '
             'black;background:red')
-        self.timer.stop()
+        self.refresh_interface_timer.stop()
         self.file_sync.status = False
 
     def run(self):
@@ -150,7 +162,7 @@ class Main(QMainWindow, interface.MainWindow):
         self.lb_status.setStyleSheet(
             'min-width: 24px; min-height: 24px;max-width:24px; max-height: 24px;border-radius: 12px;  border:1px solid '
             'black;background:green')
-        self.timer.start(1000)  # 启动定时任务
+        self.refresh_interface_timer.start(1000)  # 启动定时任务
         self.file_sync.status = True
         self.file_sync.start()
 

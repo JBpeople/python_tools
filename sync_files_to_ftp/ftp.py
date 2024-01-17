@@ -1,5 +1,6 @@
 import ftplib
 import hashlib
+import json
 import os
 import re
 from typing import Dict
@@ -23,12 +24,6 @@ class FtpFile(object):
         self.config.get_config()
 
         self.ftp = ftplib.FTP()
-
-    def __del__(self):
-        """
-        关闭FTP连接
-        """
-        self.ftp.quit()
 
     def get_connection(self):
         try:
@@ -78,6 +73,20 @@ class FtpFile(object):
             files_md5[file_name] = md5_hash.hexdigest()
         return files_md5
 
+    def is_md5_changed(self):
+        """
+        判断本地文件夹的md5值是否发生变化
+        """
+        files_md5 = self.get_local_files_md5()  # 获取本地文件夹的md5编码
+        try:
+            with open('./log/md5.json', 'r') as file:
+                old_files_md5 = json.load(file)  # 存储上一次上传记录
+        except FileNotFoundError:  # 如果没有md5记录, 则进行第一次同步
+            return True
+
+        return not files_md5 == old_files_md5
+
 
 if __name__ == '__main__':
     ftp = FtpFile()
+    print(ftp.is_md5_changed())
